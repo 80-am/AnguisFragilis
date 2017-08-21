@@ -1,4 +1,4 @@
-Working Title / snake
+Anguis Fragilis - Snake like game
 
 Must haves:
 
