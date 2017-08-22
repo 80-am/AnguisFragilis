@@ -1,7 +1,7 @@
 html,body {
 	height: 100%;
 	width: 100%;
-	background-color: black;
+	background-color: #1E1E1E;
 	overflow: hidden;
 	cursor: none;
 }
@@ -19,7 +19,7 @@ p {
 	font-size: 7em;
 	top: 0;
 	text-align: center;
-	opacity: 1;
-	color: yellow;
+	opacity: 0.7;
+	color: #FFDB58;
 	font-size: 500%;
 }

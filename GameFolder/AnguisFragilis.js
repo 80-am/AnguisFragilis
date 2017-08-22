@@ -1,6 +1,10 @@
 window.onload = function(){
 var score = document.getElementById('counter');
 score = 0;
+var blip = new Audio('munch.mp3');
+var end = new Audio('gameOver.wav')
+
+// setting game board
 var rand = function (min, max) {
   k = Math.floor(Math.random() * (max - min) + min);
   return (Math.round( k / s) * s);}
@@ -9,6 +13,7 @@ var newA = function () {
   console.log("Score: " + score);
   counter.innerHTML = score;
   score = score +1;
+    blip.play();
 },
 	newB = function () {
     sBody = [{x: 500,y: 50}]; // set start position?
@@ -17,8 +22,8 @@ var sC = document.getElementById('startGame'),
 	g = sC.getContext('2d'),
 	sBody = null,
 	d = 1, // start direction
-	a = null, // food stuff?
-	s = 20; newB(); newA(); // size of player and food width/height
+	a = null, // size of canvas
+	s = 50; newB(); newA(); // size of player and food width/height
 sC.width = innerWidth;
 sC.height = innerHeight;
 
@@ -34,6 +39,7 @@ setInterval(function(){
 		if (el.x == sBody[sBody.length - 1].x && el.y == sBody[sBody.length - 1].y &&
       i < sBody.length - 1) {
         sBody.splice(0,sBody.length-1), sBody = [{x:0,y:0}], d = 1;
+        end.play();
         score = 1;
         }
   });
@@ -45,12 +51,14 @@ setInterval(function(){
 	if (d == 4) f.y = l.y - s, f.x = Math.round(l.x / s) * s;
 	sBody.push(f);
 	sBody.splice(0,1);
-	sBody.forEach(function(pob, i){
+	sBody.forEach(function(pob, i){ // position of body
 		if (d == 1) if (pob.x > Math.round(sC.width / s) * s) pob.x = 0; // 1 = right direction
 		if (d == 2) if (pob.y > Math.round(sC.height / s) * s) pob.y = 0;  // 2 = down direction
 		if (d == 3) if (pob.x < 0) pob.x = Math.round(sC.width / s) * s;  // 3 = left direction
 		if (d == 4) if (pob.y < 0) pob.y = Math.round(sC.height / s) * s;  // 4 = up direction
-		if (pob.x == a[0] && pob.y == a[1]) newA(), sBody.unshift({x: f.x - s, y:l.y})
+		if (pob.x == a[0] && pob.y == a[1]) newA(), sBody.unshift({
+      x: f.x - s, y:l.y
+    })
 		g.fillRect(pob.x, pob.y, s, s);
 	});
 }, 60);
