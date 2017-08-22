@@ -4,6 +4,9 @@ score = 0;
 var blip = new Audio('munch.mp3');
 var end = new Audio('gameOver.wav')
 
+
+var doSound = true;
+
 // setting game board
 var rand = function (min, max) {
   k = Math.floor(Math.random() * (max - min) + min);
@@ -15,7 +18,10 @@ var newA = function () {
   console.log("Score: " + score);
   counter.innerHTML = score;
   score = score +1;
+  if (doSound) {
     blip.play();
+
+  }
 },
 	newB = function () {
     sBody = [{x: 500,y: 50}]; // set start position?
@@ -41,10 +47,13 @@ setInterval(function(){
 		if (el.x == sBody[sBody.length - 1].x && el.y == sBody[sBody.length - 1].y &&
       i < sBody.length - 1) {
         sBody.splice(0,sBody.length-1), sBody = [{x:0,y:0}], d = 1;
-        end.play();
+        if (doSound) {
+          end.play();
+        }
         score = 1;
         }
   });
+
   // adding body
 	var m = sBody[0], f = {x: m.x,y: m.y}, l = sBody[sBody.length - 1];
 	if (d == 1)  f.x = l.x + s, f.y = Math.round(l.y / s) * s;
@@ -65,8 +74,10 @@ setInterval(function(){
 	});
 }, 60);
 
-// movement with arrowbuttons
+// keyboard controller
+// movement with arrowbuttons and mute
 onkeydown = function (e) {
+  console.log('jfef ehfil fhiler');
 	var k = e.keyCode;
 	if ([38,39,40,37].indexOf(k) >= 0)
 		e.preventDefault();
@@ -74,6 +85,11 @@ onkeydown = function (e) {
 	if (k == 40 && d != 4) d = 2;
 	if (k == 37 && d != 1) d = 3;
 	if (k == 38 && d != 2) d = 4;
+
+  //muting with key 'm'
+  if (k == 77) {
+    doSound = !doSound;
+  }
 };
 
 }
