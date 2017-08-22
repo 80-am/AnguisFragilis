@@ -7,7 +7,9 @@ var end = new Audio('gameOver.wav')
 // setting game board
 var rand = function (min, max) {
   k = Math.floor(Math.random() * (max - min) + min);
-  return (Math.round( k / s) * s);}
+  return (Math.round( k / s) * s);
+}
+
 var newA = function () {
   a = [rand(0, innerWidth),rand(0, innerHeight)];
   console.log("Score: " + score);

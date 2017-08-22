@@ -4,6 +4,7 @@ html,body {
 	background-color: #1E1E1E;
 	overflow: hidden;
 	cursor: none;
+	font-family: monospace;
 }
 canvas {
 	width: 100%;
