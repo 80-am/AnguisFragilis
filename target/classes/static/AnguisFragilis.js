@@ -4,7 +4,6 @@ score = 0;
 var blip = new Audio('munch.mp3');
 var end = new Audio('gameOver.wav')
 
-
 var doSound = true;
 
 // setting game board
@@ -90,6 +89,17 @@ onkeydown = function (e) {
   if (k == 77) {
     doSound = !doSound;
   }
+
+  //'escape' for homepage
+  if (k == 27){
+
+  }
+
+  //'r' for restart
+	if (k == 82) {
+  	document.location.href = "/game"
+	}
+
 };
 
 }

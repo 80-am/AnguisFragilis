@@ -41,6 +41,7 @@ public class JdbcProjekt4Controller {
     public String highScoreHTML(){
         return "highScore";
     }
+
    /*@GetMapping("/static/index")
     public String indexHTML(){
         return "redirect:index";
