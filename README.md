@@ -1,18 +1,33 @@
-Anguis Fragilis - Snake like game
+# Anguis Fragilis
 
-Must haves:
+Set in a world without borders, Anguis is required to collect food to grow.
 
-Registration
-Login / Log out
-High Score
-Working game
+## Mission
 
-Nice to haves:
+Building a simple browser game with registration and server side high score.
 
-Graphics
-Sounds
-Wall hack / choose between walls or no walls
-Multiple Players
+### Prerequisites
 
+An updated modern browser.
 
+## Built with
 
+* [IntelliJ IDEA ](https://intellij-support.jetbrains.com/hc/en-us#) - Our IDE of choice
+* [Atom ](https://atom.io/) - CSS/JavaScript/HTML editor
+* [Spring Boot](https://projects.spring.io/spring-boot/) - Application builder
+* [SSMS](https://docs.microsoft.com/en-us/sql/ssms/sql-server-management-studio-ssms) - Server db
+
+## Contributing
+
+This game is open source, so feel free to contribute.
+
+## Authors
+
+* **sophia** - *Initial work* - [sophiabolsson](https://github.com/sophiabolsson)
+* **daniel** - *Initial work* - [danielkhan91](https://github.com/danielkhan91)
+* **sebastian** - *Initial work* - [SebastianAcademy](https://github.com/SebastianAcademy)
+* **adam** - *Initial work* - [adamberntsson](https://github.com/adamberntsson)
+
+## License
+
+This project is licensed under the MIT License
