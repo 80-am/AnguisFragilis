@@ -4,6 +4,7 @@ score = 0;
 var blip = new Audio('munch.mp3');
 var end = new Audio('gameOver.wav')
 
+
 var doSound = true;
 
 // setting game board
@@ -49,10 +50,18 @@ setInterval(function(){
         if (doSound) {
           end.play();
         }
+        score --;
+        httpGet("http://localhost:8080/userScore/" + score);
         score = 1;
         }
   });
-
+    function httpGet(theUrl)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+        xmlHttp.send( null );
+        return xmlHttp.responseText;
+    }
   // adding body
 	var m = sBody[0], f = {x: m.x,y: m.y}, l = sBody[sBody.length - 1];
 	if (d == 1)  f.x = l.x + s, f.y = Math.round(l.y / s) * s;
@@ -90,16 +99,10 @@ onkeydown = function (e) {
     doSound = !doSound;
   }
 
-  //'escape' for homepage
-  if (k == 27){
-
-  }
-
-  //'r' for restart
-	if (k == 82) {
-  	document.location.href = "/game"
+  //'escape' for index
+	if (k==27){
+  	document.location.href = "/";
 	}
-
 };
 
 }

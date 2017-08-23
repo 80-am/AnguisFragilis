@@ -98,6 +98,11 @@ onkeydown = function (e) {
   if (k == 77) {
     doSound = !doSound;
   }
+
+  //'escape' for index
+	if (k==27){
+  	document.location.href = "/";
+	}
 };
 
 }
