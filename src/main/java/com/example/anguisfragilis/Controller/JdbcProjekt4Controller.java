@@ -44,10 +44,7 @@ public class JdbcProjekt4Controller {
         List<HighScore> highScores = repo.getHighScores();
         return new ModelAndView("highScore").addObject("highScoresList", highScores);
     }
-   /*@GetMapping("/static/index")
-    public String indexHTML(){
-        return "redirect:index";
-    }*/
+
     @GetMapping("/loadingScreen")
     public String loadingScreenHTML(){
         return "loadingScreen";
