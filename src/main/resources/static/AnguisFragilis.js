@@ -90,15 +90,11 @@ onkeydown = function (e) {
     doSound = !doSound;
   }
 
-  //'escape' for homepage
+  //'escape' for home page
   if (k == 27){
-
+	document.location.href = "/";
   }
 
-  //'r' for restart
-	if (k == 82) {
-  	document.location.href = "/game"
-	}
 
 };
 
