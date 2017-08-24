@@ -16,7 +16,8 @@
       <div>
           <h1>HIGH SCORE</h1>
          <article th:each="highScore : ${highScoresList}">
-           <div th:text="${highScore.username} + ' ' + ${highScore.score}"/>
+           <div th:text=" ${highScoreNumber} + '.' + '  ' + ${highScore.username} + ' ' + ${highScore.score}"/>
+
          </article>
         <a href="/index.html"><h1>BACK</h1></a>
     </div>

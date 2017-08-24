@@ -201,3 +201,8 @@ p {
 .text--center {
   text-align: center;
 }
+
+#warning{
+  font-weight: 700;
+  color: #9E5EB0;
+}

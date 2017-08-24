@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private final String userName;
+    private String userName;
     private final String password;
     private List<Score> scoreList;
     private int userId;
@@ -33,5 +33,9 @@ public class User {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

@@ -18,10 +18,9 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
     private DataSource dataSource;
 
     @Override
-    public String addUser(User user){
-        user = addUserIdIfUserExists(user);
-        if(user.getUserId() != 0){
-            return "User already exists!";
+    public boolean addUser(User user){
+        if(getUserByUserName(user)){
+            return true;
         }else {
             try (Connection conn = dataSource.getConnection();
                  PreparedStatement ps = conn.prepareStatement("INSERT INTO USERS(Username, Password) VALUES(?,?)", new String[]{"UserID"})) {
@@ -31,32 +30,48 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
             } catch (SQLException e) {
             }
         }
-        return "Username added";
+        return false;
     }
 
     @Override
-    public User addUserIdIfUserExists(User user){
+    public User checkForLogin(User user){
+            try (Connection conn = dataSource.getConnection();
+                 PreparedStatement ps = conn.prepareStatement("SELECT Username, Password, UserID FROM Users WHERE Username = ?")) {
+                ps.setString(1, user.getUserName());
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        if (rs.getString("Password").equals(user.getPassword())) {
+                            user.setUserId(rs.getInt("UserID"));
+                        } else {
+                        }
+                    }
+                } catch (SQLException e) {
+                    throw new Projekt4RepositoryException("Wrong in if-sats" + " SQLmessage: " + e.getMessage());
+                }
+            } catch (SQLException e) {
+                throw new Projekt4RepositoryException("Connection failed!");
+            }
+        return user;
+    }
+
+    public boolean getUserByUserName (User user){
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement("SELECT Username, Password, UserID FROM Users WHERE Username = ?")){
-            ps.setString(1, user.getUserName());
-            try (ResultSet rs = ps.executeQuery()) {
-                if(rs.next()) {
-                    if (rs.getString("Username").equals(user.getUserName()) && rs.getString("Password").equals(user.getPassword())) {
-                        user.setUserId(rs.getInt("UserID"));
-                    }
-                }
-            }catch(SQLException e){
-                throw new Projekt4RepositoryException("Wrong in if-sats" + " SQLmessage: " + e.getMessage());
-            }
-        }catch(SQLException e) {
-           throw new Projekt4RepositoryException("Connection failed!");
+            ps.setString(1,user.getUserName());
+           try (ResultSet rs = ps.executeQuery()) {
+               if (rs.next()) {
+                return true;
+               }
+           }catch(SQLException e){
+           }
+        }catch(SQLException e){
+                throw new Projekt4RepositoryException("Connection in getUserByUserName failed!");
         }
-        return user;
+        return false;
     }
 
     @Override
     public void addScore(int score, User user){
-        System.out.println("Repo addScore: " + score + " User: " + user.getUserName() + " ID:" + user.getUserId());
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement("INSERT INTO Score(Score, UserID, EntryDate) VALUES(?,?, ?)", new String[]{"ScoreID"})){
             ps.setInt(1, score);

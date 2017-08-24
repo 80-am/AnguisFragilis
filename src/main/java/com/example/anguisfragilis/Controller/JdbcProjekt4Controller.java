@@ -5,6 +5,7 @@ import com.example.anguisfragilis.Domain.User;
 import com.example.anguisfragilis.Repository.Projekt4Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,10 +19,18 @@ public class JdbcProjekt4Controller {
     private Projekt4Repository repo;
 
    @PostMapping("/postLogin")
-    public String addUsers (@RequestParam String username, @RequestParam String password) {
-        String registrationInfo = repo.addUser(new User(username, password));
-        //return "index"; // open index.html, but do not update current URL
-        return "redirect:login"; //go to GetMapping("")
+    public ModelAndView addUsers (@RequestParam String username, @RequestParam String password, HttpSession session) {
+       ModelAndView setWarning = new ModelAndView();
+        boolean existingUser = repo.addUser(new User(username, password));
+        if(existingUser) {
+            String warning = "The username is already taken!";
+
+            return new ModelAndView("signUp").addObject("warning", warning);
+        }else {
+            User user = repo.checkForLogin(new User(username, password));
+            session.setAttribute("user", user);
+            return new ModelAndView("loadingScreen");
+        }
     }
 
     @GetMapping("/login")
@@ -42,7 +51,7 @@ public class JdbcProjekt4Controller {
     @GetMapping("/highScore")
     public ModelAndView highScoreHTML(){
         List<HighScore> highScores = repo.getHighScores();
-        return new ModelAndView("highScore").addObject("highScoresList", highScores);
+        return new ModelAndView("highScore").addObject("highScoresList", highScores).addObject("highScoreNumber", 1);
     }
 
     @GetMapping("/loadingScreen")
@@ -51,19 +60,20 @@ public class JdbcProjekt4Controller {
     }
 
     @PostMapping("/verification")
-    public String checkUser (@RequestParam String username, @RequestParam String password, HttpSession session) {
-        User user = repo.addUserIdIfUserExists(new User(username, password));
+    public ModelAndView checkUser (@RequestParam String username, @RequestParam String password, HttpSession session) {
+        User user = repo.checkForLogin(new User(username, password));
         if(user.getUserId() != 0){
             session.setAttribute("user", user);
-            return "redirect:loadingScreen";
+            return new ModelAndView("loadingScreen");
         }
-        return "redirect:login";
+        return new ModelAndView("login").addObject("warning", "Invalid username or password");
     }
     @ResponseBody
     @GetMapping("/userScore/{score}")
     public void addUserScore(@PathVariable int score, HttpSession session){
-        System.out.println("Controller addUser");
         User user = (User)session.getAttribute("user");
+        String stringscore = "" + score;
+        String displayLastScore = (String)session.getAttribute(stringscore);
         repo.addScore(score, user);
     }
 

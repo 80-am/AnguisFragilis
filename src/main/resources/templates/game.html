@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="UTF-8"/>
 	<link rel="stylesheet" type="text/css" href="css/game.css"/>
@@ -13,5 +13,6 @@
 	</script>
 </div>
 	<canvas id="startGame"></canvas>
+	<p id="LastScore" th:text="${displayLastScore}"/>
 </body>
 </html>
