@@ -54,7 +54,13 @@ setInterval(function(){
         lastScore = score--;
         httpGet("http://localhost:8080/userScore/" + lastScore);
         score = 1;
-        location.reload(true);
+            setTimeout(function(){
+
+                location.reload(true);
+
+            }, 1000);
+
+
         }
   });
     function httpGet(theUrl)
@@ -106,5 +112,7 @@ onkeydown = function (e) {
   	document.location.href = "/";
 	}
 };
+
+
 
 }
