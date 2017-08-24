@@ -101,6 +101,24 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
         return new HighScore(rs.getInt("Score"), rs.getString("Username"));
     }
 
+    @Override
+    public int getUserHighScore(User user){
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT TOP 1 Score FROM Score WHERE UserID=? ORDER BY Score DESC")) {
+            ps.setInt(1,user.getUserId());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                int userHighScore = rs.getInt("Score");
+                System.out.println("User high score: " + userHighScore);
+                return userHighScore;
+            }
+        }catch(SQLException e) {
+            throw new Projekt4RepositoryException("Connection failed!");
+        }
+        return 0;
+    }
+
+
     /*public void getUser(int userId){
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement("INSERT INTO USERS(Username, Password) VALUES(?,?)", new String[]{"id"})){

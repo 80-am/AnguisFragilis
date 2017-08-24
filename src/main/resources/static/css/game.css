@@ -26,6 +26,10 @@ p {
 	font-size: 500%;
 	cursor: none;
 }
-#LastScore{
-	alignment: bottom;
+.showUsersHighScore{
+	text-align: right;
+	padding-right: 1em;
+	top:0;
+	font-size: 18px;
+	color: #FFDB58;
 }

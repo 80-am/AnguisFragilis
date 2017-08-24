@@ -3,7 +3,7 @@ var score = document.getElementById('counter');
 score = 0;
 var blip = new Audio('munch.mp3');
 var end = new Audio('gameOver.wav');
-var displayLastScore = 0;
+var lastScore = 0;
 
 
 var doSound = true;
@@ -51,9 +51,10 @@ setInterval(function(){
         if (doSound) {
           end.play();
         }
-        displayLastScore =  score--;
-        httpGet("http://localhost:8080/userScore/" + displayLastScore);
+        lastScore =  score--;
+        httpGet("http://localhost:8080/userScore/" + lastScore);
         score = 1;
+        location.reload(true);
         }
   });
     function httpGet(theUrl)
