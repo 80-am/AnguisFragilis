@@ -26,7 +26,29 @@ a, h1 {
 	text-align: center;
 	position: relative;
 	z-index: 999;
+
 	}
+
+.title {
+
+	text-decoration: none;
+	color: #9E5EB0;
+	font-size: 38px;
+	text-align: center;
+	position: relative;
+	z-index: 999;
+	animation-name: flash;
+	animation-duration: 0.1s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-play-state: running;
+}
+
+@keyframes flash {
+	from {color: #FFDB58;}
+	to {color: #1E1E1E;}
+}
 
 
 a:hover {
@@ -61,16 +83,22 @@ canvas {
 	font-size: 20px;
 
 }
+
+span {
+	width:60px;
+	display:inline-block;
+}
+
+
 .highScoreCount{
-	padding-left: 2em;
 	text-align: left;
 }
 
-.highScoreUsername{
+.highScoreUsername {
 	text-align: left;
-	padding-right: 2em;
+	padding-left: 5px;
 }
+
 .highScoreGlobal{
-	text-align: left;
-	padding-left: 2em;
+	text-align: right;
 }

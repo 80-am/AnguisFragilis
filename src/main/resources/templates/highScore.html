@@ -14,7 +14,7 @@
       </div>
     </div>
       <div>
-          <h1>HIGH SCORE</h1>
+          <h1 class="title">HIGH SCORE</h1>
          <article th:each="highScore, count : ${highScoresList}">
            <div class="highScoreList" >
              <span class="highScoreCount" th:text="${count.count} + '.'"/> <span class="highScoreUsername" th:text="${highScore.username}"/><span class="highScoreGlobal" th:text="${highScore.score}"/>
