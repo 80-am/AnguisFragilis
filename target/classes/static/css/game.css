@@ -24,3 +24,6 @@ p {
 	color: #FFDB58;
 	font-size: 500%;
 }
+#LastScore{
+	alignment: bottom;
+}

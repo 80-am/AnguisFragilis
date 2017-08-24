@@ -28,15 +28,6 @@ a, h1 {
 	z-index: 999;
 	}
 
-li {
-  text-decoration: none;
-  color: #FFDB58;
-  font-size: 18px;
-	text-align: center;
-	justify-content: center;
-	position: relative;
-	z-index: 999;
-	}
 
 a:hover {
   color: #9E5EB0;
@@ -58,10 +49,28 @@ video {
 	object-fit: cover;
 	width: 100%;
 	height: 100%;
-	z-index: 3;
+	z-index: 1;
 	}
 canvas {
 	position: fixed;
 	top: 0; left: 0;
 	z-index: 2;
 	}
+
+.highScoreList{
+	font-size: 20px;
+
+}
+.highScoreCount{
+	padding-left: 2em;
+	text-align: left;
+}
+
+.highScoreUsername{
+	text-align: left;
+	padding-right: 2em;
+}
+.highScoreGlobal{
+	text-align: left;
+	padding-left: 2em;
+}

@@ -195,6 +195,11 @@ p {
   margin-top: 1.5rem;
 }
 
+#warning{
+  font-weight: 700;
+  color: #9E5EB0;
+}
+
 .text--center {
   text-align: center;
 }

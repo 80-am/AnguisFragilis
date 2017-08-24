@@ -51,7 +51,7 @@ public class JdbcProjekt4Controller {
     @GetMapping("/highScore")
     public ModelAndView highScoreHTML(){
         List<HighScore> highScores = repo.getHighScores();
-        return new ModelAndView("highScore").addObject("highScoresList", highScores).addObject("highScoreNumber", 1);
+        return new ModelAndView("highScore").addObject("highScoresList", highScores);
     }
 
     @GetMapping("/loadingScreen")
@@ -72,8 +72,7 @@ public class JdbcProjekt4Controller {
     @GetMapping("/userScore/{score}")
     public void addUserScore(@PathVariable int score, HttpSession session){
         User user = (User)session.getAttribute("user");
-        String stringscore = "" + score;
-        String displayLastScore = (String)session.getAttribute(stringscore);
+        session.setAttribute("lastScore", score);
         repo.addScore(score, user);
     }
 

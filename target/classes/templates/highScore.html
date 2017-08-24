@@ -15,8 +15,10 @@
     </div>
       <div>
           <h1>HIGH SCORE</h1>
-         <article th:each="highScore : ${highScoresList}">
-           <div th:text="${highScore.username} + ' ' + ${highScore.score}"/>
+         <article th:each="highScore, count : ${highScoresList}">
+           <div class="highScoreList" >
+             <span class="highScoreCount" th:text="${count.count}"/> <span class="highScoreUsername" th:text="${highScore.username}"/><span class="highScoreGlobal" th:text="${highScore.score}"/>
+           </div>
          </article>
         <a href="/index.html"><h1>BACK</h1></a>
     </div>
