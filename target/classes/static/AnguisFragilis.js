@@ -51,7 +51,7 @@ setInterval(function(){
         if (doSound) {
           end.play();
         }
-        lastScore =  score--;
+        lastScore = score--;
         httpGet("http://localhost:8080/userScore/" + lastScore);
         score = 1;
         location.reload(true);

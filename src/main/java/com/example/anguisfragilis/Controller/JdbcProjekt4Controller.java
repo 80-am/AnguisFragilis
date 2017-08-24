@@ -83,8 +83,8 @@ public class JdbcProjekt4Controller {
     @GetMapping("/userScore/{score}")
     public void addUserScore(@PathVariable int score, HttpSession session){
         User user = (User)session.getAttribute("user");
-        repo.addScore(score, user);
-        session.setAttribute("latestScore", score);
+        repo.addScore(score-1, user);
+        session.setAttribute("latestScore", score-1);
     }
 
     @GetMapping("/logOut")

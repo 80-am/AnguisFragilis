@@ -109,7 +109,6 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 int userHighScore = rs.getInt("Score");
-                System.out.println("User high score: " + userHighScore);
                 return userHighScore;
             }
         }catch(SQLException e) {
@@ -117,25 +116,5 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
         }
         return 0;
     }
-
-
-    /*public void getUser(int userId){
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO USERS(Username, Password) VALUES(?,?)", new String[]{"id"})){
-            ps.setString(1, userName);
-            ps.setString(2, password);
-            ps.executeUpdate();
-        }catch(SQLException e){
-        }
-    }
-    public void addScore(String userName, String password){
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO USERS(Username, Password) VALUES(?,?)", new String[]{"id"})){
-            ps.setString(1, userName);
-            ps.setString(2, password);
-            ps.executeUpdate();
-        }catch(SQLException e){
-        }
-    }*/
 
 }

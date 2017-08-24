@@ -11,4 +11,5 @@ public interface Projekt4Repository {
     void addScore (int score, User user);
     List<HighScore> getHighScores();
     int getUserHighScore(User user);
+
 }
