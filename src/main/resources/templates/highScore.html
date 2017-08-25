@@ -15,12 +15,14 @@
     </div>
       <div>
           <h1 class="title">HIGH SCORE</h1>
-         <article th:each="highScore, count : ${highScoresList}">
+         <article th:each="highScore, count : ${session.highScoreList}">
            <div class="highScoreList" >
              <span class="highScoreCount" th:text="${count.count} + '.'"/> <span class="highScoreUsername" th:text="${highScore.username}"/><span class="highScoreGlobal" th:text="${highScore.score}"/>
            </div>
          </article>
-        <a href="/index.html"><h1>BACK</h1></a>
+        <div th:if="${session.user}" class="showUserHighScore" th:text="'Your high score is ' + ${session.userHighScore}"/>
+
+        <a href="/"><h1>BACK</h1></a>
     </div>
   </body>
 </html>

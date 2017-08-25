@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User {
     private String userName;
-    private final String password;
+    private String password;
     private List<Score> scoreList;
     private int userId;
 
@@ -13,6 +13,12 @@ public class User {
         this.userName = userName;
         this.password = password;
         this.scoreList = new ArrayList<>();
+    }
+
+    public User(String userName, String password, int userId) {
+        this.userName = userName;
+        this.password = password;
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -38,4 +44,5 @@ public class User {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
 }

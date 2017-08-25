@@ -64,3 +64,9 @@ canvas {
 	top: 0; left: 0;
 	z-index: 2;
 	}
+.showUser{
+	font-size: 20px;
+	padding-top: 2em;
+	color: #9E5EB0;
+	background-color: green;
+}

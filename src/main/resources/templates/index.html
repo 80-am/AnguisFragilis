@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+  	<script type="text/javascript" src="start.js"></script>
+    <title>Anguis Fragilis</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <video src="introMovie.mp4" id="video" autoplay="autoplay" loop="loop"></video>
+      	<canvas id="canvas"></canvas>
+      </div>
+    </div>
+      <div>
+          <a href="https://en.wikipedia.org/wiki/Anguis_fragilis" target="_blank"><h1>ANGUIS FRAGILIS</h1></a>
+        <a  href="/login">play /</a>
+        <a href="/highScore">high score</a>
+        <a th:if="${session.user}" href="/logOut"> / log out</a>
+        <a th:if="${session.user}" href="/passwordChange"> / change password</a>
+        <a th:if="${session.user}" th:text="' /  ' + ${session.user.userName}"> </a>
+      </div>
+  </body>
+</html>

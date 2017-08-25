@@ -4,9 +4,13 @@ score = 0;
 var blip = new Audio('munch.mp3');
 var end = new Audio('gameOver.wav');
 var lastScore = 0;
+var pageReload = false;
+
+if(!pageReload){
+    var doSound = true;
+}
 
 
-var doSound = true;
 
 // setting game board
 var rand = function (min, max) {
@@ -25,7 +29,7 @@ var newA = function () {
   }
 },
 	newB = function () {
-    sBody = [{x: 500,y: 50}]; // set start position?
+    sBody = [{x: 500,y: 50}]; // set start position
   }
 var sC = document.getElementById('startGame'),
 	g = sC.getContext('2d'),
@@ -40,7 +44,7 @@ setInterval(function(){
 	if (a[0] + s >= sC.width || a[1] + s >= sC.height) newA();
   g.clearRect(0,0,sC.width,sC.height);
 	g.fillStyle = "#9E5EB0"; // change color of food
-  g.fillRect(...a , s, s); // printing food what is ...a?
+  g.fillRect(...a , s, s); // printing food what is
 	g.fillStyle = "#A5FFD6"; // change color of player
 
   // check to see if you are eating yourself and dying
@@ -51,6 +55,7 @@ setInterval(function(){
         if (doSound) {
           end.play();
         }
+        pageReload = true;
         lastScore = score--;
         httpGet("http://localhost:8080/userScore/" + lastScore);
         score = 1;

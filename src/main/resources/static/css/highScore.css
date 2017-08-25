@@ -102,3 +102,7 @@ span {
 .highScoreGlobal{
 	text-align: right;
 }
+.showUserHighScore{
+	font-size: 20px;
+	padding-top: 2em;
+}

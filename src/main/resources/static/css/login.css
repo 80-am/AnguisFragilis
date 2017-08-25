@@ -201,6 +201,12 @@ p {
 .text--center {
   text-align: center;
 }
+.text--under{
+  text-align: center;
+  font-weight: 700;
+  color: #9E5EB0;
+  font-size: 16px;
+}
 
 #warning{
   font-weight: 700;

@@ -7,7 +7,7 @@
 	<title>Anguis Fragilis</title>
 </head>
 <body>
-	<div class="showUsersHighScore" th:text="'Your high score is: ' + ${userHighScore}"/>
+	<div class="showUsersHighScore" th:text="'Your high score is: ' + ${session.userHighScore}"/>
 	<div th:if="${session.latestScore}" class="showUsersHighScore" th:text="'Your latest score: ' + ${session.latestScore}"/>
 	<div class="text"><p id="counter"/>
 <script>

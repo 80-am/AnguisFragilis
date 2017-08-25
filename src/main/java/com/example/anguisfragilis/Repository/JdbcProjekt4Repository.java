@@ -18,10 +18,7 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
     private DataSource dataSource;
 
     @Override
-    public boolean addUser(User user){
-        if(getUserByUserName(user)){
-            return true;
-        }else {
+    public void addUser(User user){
             try (Connection conn = dataSource.getConnection();
                  PreparedStatement ps = conn.prepareStatement("INSERT INTO USERS(Username, Password) VALUES(?,?)", new String[]{"UserID"})) {
                 ps.setString(1, user.getUserName());
@@ -29,8 +26,6 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
                 ps.executeUpdate();
             } catch (SQLException e) {
             }
-        }
-        return false;
     }
 
     @Override
@@ -54,20 +49,22 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
         return user;
     }
 
-    public boolean getUserByUserName (User user){
+    public User getUserByUserName (String username){
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement("SELECT Username, Password, UserID FROM Users WHERE Username = ?")){
-            ps.setString(1,user.getUserName());
+            ps.setString(1,username);
            try (ResultSet rs = ps.executeQuery()) {
                if (rs.next()) {
-                return true;
+                User user = new User(rs.getString("Username"), rs.getString("Password"), rs.getInt("Userid"));
+                return user;
                }
            }catch(SQLException e){
+               return null;
            }
         }catch(SQLException e){
                 throw new Projekt4RepositoryException("Connection in getUserByUserName failed!");
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -117,4 +114,15 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
         return 0;
     }
 
+    @Override
+    public void setNewPassword(String username, String password){
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("Update Users SET Password = ? WHERE Username = ?")) {
+            ps.setString(1, password);
+            ps.setString(2, username);
+            ps.executeUpdate();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
