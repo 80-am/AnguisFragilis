@@ -32,14 +32,6 @@ public class JdbcProjekt4Controller {
 
    @PostMapping("/postLogin")
     public String addUsers (@RequestParam String username, @RequestParam String password, HttpSession session , Model model/*, BindingResult result*/) {
-       /* User user = new User(username, password);  //Using Validator
-        UserValidator userval = new UserValidator();
-        if(userval.supports(user.getClass())){
-            userval.validate(user, result);
-        }
-        if(result.hasErrors()){
-            return new ModelAndView("signUp").addObject("result", result);
-        }*/
        if(username.length()>15){
            model.addAttribute("warning", "Username must be less than 15 characters");
            return "signUp";
@@ -170,12 +162,4 @@ public class JdbcProjekt4Controller {
         return userHighScore;
     }
 
-   /* public void clearCookies (HttpSession session, User user){
-        if(user.getUserName() != null) {
-            session.invalidate();
-            Cookie cookie = new Cookie("jessionid", "");
-            cookie.setMaxAge(0);
-            res.addCookie(cookie);
-        }
-    }*/
 }
