@@ -17,12 +17,11 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
     @Autowired
     private DataSource dataSource;
 
-    @Override
-    public void addUser(User user){
+    public void addUser(String username, String password){
             try (Connection conn = dataSource.getConnection();
                  PreparedStatement ps = conn.prepareStatement("INSERT INTO USERS(Username, Password) VALUES(?,?)", new String[]{"UserID"})) {
-                ps.setString(1, user.getUserName());
-                ps.setString(2, user.getPassword());
+                ps.setString(1, username);
+                ps.setString(2, password);
                 ps.executeUpdate();
             } catch (SQLException e) {
             }
@@ -73,6 +72,7 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO Score(Score, UserID, EntryDate) VALUES(?,?, ?)", new String[]{"ScoreID"})){
             ps.setInt(1, score);
             ps.setInt(2, user.getUserId());
+            System.out.println(user.getUserId());
             ps.setDate(3, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
             ps.executeUpdate();
         }catch(SQLException e){
@@ -102,7 +102,7 @@ public class JdbcProjekt4Repository implements Projekt4Repository {
     public int getUserHighScore(User user){
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement("SELECT TOP 1 Score FROM Score WHERE UserID=? ORDER BY Score DESC")) {
-            ps.setInt(1,user.getUserId());
+            ps.setInt(1, user.getUserId());
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 int userHighScore = rs.getInt("Score");

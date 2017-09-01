@@ -6,7 +6,7 @@ import com.example.anguisfragilis.Domain.User;
 import java.util.List;
 
 public interface Projekt4Repository {
-    void addUser(User user);
+    void addUser(String username, String password);
     User checkForLogin(User user);
     void addScore (int score, User user);
     List<HighScore> getHighScores();

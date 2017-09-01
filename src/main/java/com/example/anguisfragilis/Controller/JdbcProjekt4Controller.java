@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.http.HTTPBinding;
 import java.util.List;
 
 @Controller
@@ -21,9 +22,11 @@ public class JdbcProjekt4Controller {
 
     @Autowired
     private Projekt4Repository repo;
+    //private HttpServletResponse res;
 
     @GetMapping("/")
-    public String indexHTML(){
+    public String indexHTML(HttpSession session){
+        setGlobalHighScoreList(session);
         return "index";
     }
 
@@ -45,18 +48,18 @@ public class JdbcProjekt4Controller {
            model.addAttribute("warning", "User already exists!");
             return "signUp";
         }else {
+            repo.addUser(username, password);
             User user = repo.checkForLogin(new User(username, password));
+            setCookiesForUser(session, user);
+            int userHighScore = getUserHighScore(user);
+            session.setAttribute("userHighScore", userHighScore);
             session.setAttribute("user", user);
-            return "loadingScreen";
+            setGlobalHighScoreList(session);
+            //clearCookies(session, user);
+            return "index";
         }
     }
 
-    boolean checkIfUserExists (String username){
-       if(repo.getUserByUserName(username) != null){
-           return true;
-       }
-       return false;
-    }
 
     @GetMapping("/login")
     public String loginHTML(HttpSession session){
@@ -93,16 +96,11 @@ public class JdbcProjekt4Controller {
         }
     }
 
-    public void changePassword(String username, String password){
-        repo.setNewPassword(username, password);
-    }
-
     @GetMapping("/highScore")
-    public String highScoreHTML(HttpSession session){
-        List<HighScore> highScores = repo.getHighScores();
-        session.setAttribute("highScoreList", highScores);
+    public String highScoreHTML(){
         return "highScore";
     }
+
 
     @GetMapping("/loadingScreen")
     public String loadingScreenHTML(){
@@ -113,9 +111,11 @@ public class JdbcProjekt4Controller {
     public String checkUser (@RequestParam String username, @RequestParam String password, HttpSession session, Model model) {
         User user = repo.checkForLogin(new User(username, password));
         if(user.getUserId() != 0){
-            int userHighScore = repo.getUserHighScore(user);
+            setCookiesForUser(session, user);
+            int userHighScore = getUserHighScore(user);
             session.setAttribute("userHighScore", userHighScore);
             session.setAttribute("user", user);
+            setGlobalHighScoreList(session);
             return "index";
         }
         model.addAttribute("warning", "Invalid username or password");
@@ -127,6 +127,11 @@ public class JdbcProjekt4Controller {
         User user = (User)session.getAttribute("user");
         repo.addScore(score-1, user);
         session.setAttribute("latestScore", score-1);
+        setGlobalHighScoreList(session);
+        int userHighScore = repo.getUserHighScore(user);
+        if(userHighScore > (int)session.getAttribute("userHighScore")){
+            session.setAttribute("userHighScore", userHighScore);
+        }
     }
 
     @GetMapping("/logOut")
@@ -137,4 +142,40 @@ public class JdbcProjekt4Controller {
         res.addCookie(cookie);
         return "login";
     }
+
+
+    boolean checkIfUserExists (String username){
+        if(repo.getUserByUserName(username) != null){
+            return true;
+        }
+        return false;
+    }
+
+    public void setCookiesForUser(HttpSession session, User user){
+        session.setAttribute("user", user);
+    }
+
+
+    public void setGlobalHighScoreList(HttpSession session){
+        List<HighScore> highScores = repo.getHighScores();
+        session.setAttribute("highScoreList", highScores);
+    }
+
+    public void changePassword(String username, String password){
+        repo.setNewPassword(username, password);
+    }
+
+    public int getUserHighScore (User user){
+        int userHighScore = repo.getUserHighScore(user);
+        return userHighScore;
+    }
+
+   /* public void clearCookies (HttpSession session, User user){
+        if(user.getUserName() != null) {
+            session.invalidate();
+            Cookie cookie = new Cookie("jessionid", "");
+            cookie.setMaxAge(0);
+            res.addCookie(cookie);
+        }
+    }*/
 }
